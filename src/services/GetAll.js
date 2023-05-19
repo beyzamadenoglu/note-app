@@ -4,12 +4,8 @@ const getAllNotes = async () => {
     try {
         return await axios
             .get(URL.getAll).then((res)=> {
-                if (res.status === 200) {
-                    return res.data;
-                }
-                else {
-                    return { error: 'Notes not found' }
-                }
+               return res.data;
+               
             });
     }
     catch (error) {
@@ -17,5 +13,6 @@ const getAllNotes = async () => {
     }
 
 }
+
 
 export default getAllNotes;

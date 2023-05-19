@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Note from "../components/NoteList";
 
 const NotesPage = () => {
   return (
-    <div>NotesPage</div>
+    <>
+      <Note />
+    </>
   )
 }
 

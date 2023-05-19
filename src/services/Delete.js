@@ -11,4 +11,6 @@ import axios, { URL } from '../axios/axios';
         });
 }
 
+
+
 export default DeleteNote;
