@@ -1,6 +1,6 @@
-$color_1: #525252;
+$color_1: #f7f2f2e9;
 $color_2: #b1b1b1;
-$background-color_1: white;
+$background-color_1: rgba(255, 255, 255, 0.941);
 $background-color_2: #FBFBFB;
 
 .login-form {
@@ -9,6 +9,7 @@ $background-color_2: #FBFBFB;
 	align-items: center;
 	justify-content: center;
 	border-radius: 10px;
+	
 	>form {
 		color: $color_1;
 		display: flex;
@@ -17,15 +18,17 @@ $background-color_2: #FBFBFB;
 		min-width: 350px;
 		border-radius: 8px;
 		margin: 32px;
-		background-color: $background-color_1;
+		background: rgba(102, 97, 97, 0.17);
 		width: 20vw;
+	}
+
+	input{
+		padding: 10px 12px;
 	}
 }
 input {
-	font: 16px/22px Nunito;
 	background: #F4F4F4 !important;
 	border-radius: 8px;
-	padding: 7px 11px !important;
 }
 button[type="submit"] {
 	font-weight: bold;

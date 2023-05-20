@@ -2,6 +2,8 @@ import React from "react";
 import IconButton from "@mui/material/IconButton";
 import { toast } from "react-toastify";
 import ReactImageFallback from "react-image-fallback";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import NotFoundImage from "../Images/NotFound";
 
 import DeleteNote from "../services/Delete";
@@ -29,20 +31,21 @@ const Note = ({ note }) => {
     });
   };
   return (
-    <div>
-      <p>{note.information}</p>
-      <p>{note.priority}</p>
-      <ReactImageFallback
+    <div className="note">
+     <ReactImageFallback
         src={note.image.imagePreviewUrl}
         fallbackImage={<NotFoundImage />}
         alt="note_image"
         className=""
       />
-      <IconButton className="button" onClick={deleteItem}>
-        sill
+      <p>{note.name}</p>
+      <p>{note.information}</p>
+      <p>{note.priority}</p>
+      <IconButton className="button hovered" onClick={deleteItem}>
+        <DeleteOutlinedIcon />
       </IconButton>
-      <IconButton className="button" onClick={deleteItem}>
-        update
+      <IconButton className="button hovered" onClick={deleteItem}>
+        <ModeEditOutlineOutlinedIcon />
       </IconButton>
     </div>
   );

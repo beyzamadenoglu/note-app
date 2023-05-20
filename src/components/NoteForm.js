@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormGroup, InputLabel, Input, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 import AddNote from "../services/Add";
+import getAll from "../services/GetAll";
 
-const NoteForm = () => {
-  const [note, setNote] = useState([]);
-  const [priority, setPriority] = useState('');
+
+const NoteForm = ({ typeForm, not }) => {
+  const [note, setNote] = useState("");
+  const [priority, setPriority] = useState("");
+  const [noteList, setNoteList] = useState([]);
 
   const [image, setImage] = useState({
     selectedImage: null,
@@ -17,6 +20,14 @@ const NoteForm = () => {
   });
 
   const { selectedImage, imagePreviewUrl } = image;
+
+  useEffect(() => {
+    if (typeForm === "update" && not) {
+      setNote(note.name);
+    } else {
+      setNote("");
+    }
+  }, []);
 
   const fileChangedHandler = (event) => {
     setImage({ ...image, selectedImage: event.target.files[0] });
@@ -40,7 +51,23 @@ const NoteForm = () => {
       date: new Date().toLocaleString(),
     };
     return await AddNote(noteObject).then((response) => {
-       console.log(response);
+      console.log(response);
+    });
+  };
+
+  const handleUpdate = async (id) => {
+    const noteObject = {
+      name: note,
+      image: image,
+      priority: priority,
+    };
+    return await getAll().then((response) => {
+     setNoteList(response);
+     noteList.forEach(note => {
+      if(not.id===id) 
+        return note;
+     })
+     console.log(noteList);
     });
   };
 
@@ -51,7 +78,6 @@ const NoteForm = () => {
     }
   };
 
-
   const successMessage = () => {
     toast.success("Succesfully added!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -59,21 +85,27 @@ const NoteForm = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     e.target.reset();
     setImage({
       selectedImage: null,
       imagePreviewUrl: null,
     });
-    setPriority('');
-    e.preventDefault();
-
-
-    handleService().then((res) => {
-      successMessage();
-    });
+    setPriority("");
+    if (typeForm === "add") {
+      handleService().then(() => {
+        successMessage();
+      });
+    }
+    if (typeForm === "update") {
+      handleUpdate().then(() => {
+        successMessage();
+      });
+    }
   };
+
   return (
-    <div>
+    <div className="form">
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormGroup
           sx={{
@@ -91,7 +123,7 @@ const NoteForm = () => {
           </InputLabel>
           <Input
             required
-            placeholder={"Note description"}
+            placeholder={"Not Bilgisi"}
             sx={{ gridArea: "input" }}
             id="my-input"
             aria-describedby="my-helper-text"
@@ -119,7 +151,7 @@ const NoteForm = () => {
                 />
                 <label htmlFor="raised-button-file">
                   <Button variant="raised" component="span">
-                    upload
+                    Resim Yükle
                   </Button>
                 </label>
               </CardContent>
@@ -130,19 +162,14 @@ const NoteForm = () => {
               </CardContent>
             )}
           </Card>
-          <InputLabel sx={{ gridArea: "label" }} htmlFor="my-input">
-           Lütfen "0-5" arası bir rakam giriniz.
-          </InputLabel>
           <TextField
-          id="filled-number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="filled"
-          value={priority}
-          onChange={handleChange}
-        />
+            id="filled-number"
+            type="number"
+            variant="filled"
+            label="0-5 arası öncelik"
+            value={priority}
+            onChange={handleChange}
+          />
         </FormGroup>
       </form>
     </div>

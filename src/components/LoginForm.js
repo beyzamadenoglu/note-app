@@ -33,7 +33,7 @@ const LoginForm = () => {
     localStorage.setItem("auth", auth);
     console.log(auth)
     if(auth) {
-        navigate("/notes");
+        navigate("/listNotes");
     }else{
         navigate("/");
     }
@@ -76,7 +76,7 @@ const LoginForm = () => {
               size="large"
               style={{
                 borderRadius: "8px",
-                backgroundColor: "#4B9CE2",
+                backgroundColor: "rgb(248 211 149 / 48%)",
                 padding: "2px 20px",
                 fontSize: "18px",
                 color: "#FFFFFF",

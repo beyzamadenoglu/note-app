@@ -1,0 +1,51 @@
+.notes {
+    margin: auto;
+    width: 50%;
+	margin-top: 20px;
+	border-radius: 6px;
+	padding: 20px;
+    .note {
+		background-color: rgba(148, 141, 141, 0.353);
+        margin: 8px;
+		padding: 10px;
+		border-radius: 6px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		transition: 0.3s;
+		cursor: pointer;
+		border: 1px solid #ccc;
+		p {
+			width: 100%;
+		}
+
+        .hovered {
+            display: none;
+        }
+        &:hover {
+            .hovered {
+                display: inline;
+            }
+        }
+
+	}
+}
+
+
+#list-container {
+	background: rgba(102, 97, 97, 0.17);
+	padding: 13px;
+	backdrop-filter: blur(4px);
+	border-radius: 20px;
+}
+
+.form {
+    margin: auto;
+    width: 50%;
+	margin-top: 10%;
+	border-radius: 6px;
+	padding: 20px;
+}
+
+
+
