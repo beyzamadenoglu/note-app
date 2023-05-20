@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import ReactImageFallback from "react-image-fallback";
 import NotFoundImage from "../Images/NotFound";
 
-
 import DeleteNote from "../services/Delete";
 
 const Note = ({ note }) => {
@@ -34,15 +33,19 @@ const Note = ({ note }) => {
       <p>{note.information}</p>
       <p>{note.priority}</p>
       <ReactImageFallback
-                    src={note.image.imagePreviewUrl}
-                    fallbackImage={<NotFoundImage />}
-                    alt="note_image"
-                    className="" />
+        src={note.image.imagePreviewUrl}
+        fallbackImage={<NotFoundImage />}
+        alt="note_image"
+        className=""
+      />
       <IconButton className="button" onClick={deleteItem}>
         sill
       </IconButton>
+      <IconButton className="button" onClick={deleteItem}>
+        update
+      </IconButton>
     </div>
   );
-};  
+};
 
 export default Note;

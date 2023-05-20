@@ -3,8 +3,7 @@ import { FormGroup, InputLabel, Input, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 import { toast } from "react-toastify";
 import AddNote from "../services/Add";
 
@@ -46,18 +45,15 @@ const NoteForm = () => {
   };
 
   const handleChange = (e) => {
-    setPriority(e.target.value);
+    const regex = /^[0-5]$/;
+    if (e.target.value === "" || regex.test(e.target.value)) {
+      setPriority(e.target.value);
+    }
   };
 
 
   const successMessage = () => {
     toast.success("Succesfully added!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
-  const errorMessage = (message) => {
-    toast.error(message, {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
@@ -94,6 +90,7 @@ const NoteForm = () => {
             Add Your Note
           </InputLabel>
           <Input
+            required
             placeholder={"Note description"}
             sx={{ gridArea: "input" }}
             id="my-input"
@@ -133,20 +130,19 @@ const NoteForm = () => {
               </CardContent>
             )}
           </Card>
-          <InputLabel id="demo-simple-select-label">Priority</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={priority}
-            label="Priority"
-            onChange={handleChange}
-          >
-            <MenuItem value={1}>1</MenuItem>
-            <MenuItem value={2}>2</MenuItem>
-            <MenuItem value={3}>3</MenuItem>
-            <MenuItem value={4}>2</MenuItem>
-            <MenuItem value={5}>3</MenuItem>
-          </Select>
+          <InputLabel sx={{ gridArea: "label" }} htmlFor="my-input">
+           Lütfen "0-5" arası bir rakam giriniz.
+          </InputLabel>
+          <TextField
+          id="filled-number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="filled"
+          value={priority}
+          onChange={handleChange}
+        />
         </FormGroup>
       </form>
     </div>

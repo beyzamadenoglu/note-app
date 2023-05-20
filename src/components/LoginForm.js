@@ -19,7 +19,7 @@ const LoginForm = () => {
   const handleLogin = async (credentials) => {
     if (
       credentials.username === "admin" &&
-      credentials.password === "admin12345"
+      credentials.password === "12345"
     ) {
       setAuth((prev) => !prev);
     } else {
