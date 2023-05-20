@@ -6,7 +6,9 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Logo from "../Images/Logo";
+import NoteAdd from "../Images/NoteAdd";
 import { Link } from 'react-router-dom';
+import Note from "./Note";
 
 const Header = () => {
   const [auth, setAuth] = React.useState(true);
@@ -52,9 +54,20 @@ const Header = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            component={Link}to="/addNote"
+            component={Link}to="/listNotes"
           >
             <Logo />
+          </IconButton>
+
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            component={Link}to="/addNote"
+          >
+            <NoteAdd />
           </IconButton>
         </Toolbar>
       </AppBar>
