@@ -6,28 +6,38 @@ import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 import AddNote from "../services/Add";
-import getAll from "../services/GetAll";
+import Update from "../services/Update";
+import GetById from "../services/GetById";
+import { useParams } from "react-router-dom"
 
-
-const NoteForm = ({ typeForm, not }) => {
+const NoteForm = ({ typeForm, not, noteId }) => {
   const [note, setNote] = useState("");
   const [priority, setPriority] = useState("");
-  const [noteList, setNoteList] = useState([]);
 
   const [image, setImage] = useState({
     selectedImage: null,
     imagePreviewUrl: null,
   });
 
+  const { id } = useParams();
+
   const { selectedImage, imagePreviewUrl } = image;
 
   useEffect(() => {
-    if (typeForm === "update" && not) {
-      setNote(note.name);
+    const setNoteState = async () => {
+      const updateObject = await GetById(id);
+      setNote(updateObject.name);
+      setPriority(updateObject.priority);
+      setImage(updateObject.image);
+    }
+
+    if (typeForm === "update" && id) {
+      setNoteState();
     } else {
       setNote("");
     }
-  }, []);
+  }, [id]);
+
 
   const fileChangedHandler = (event) => {
     setImage({ ...image, selectedImage: event.target.files[0] });
@@ -50,26 +60,20 @@ const NoteForm = ({ typeForm, not }) => {
       priority: priority,
       date: new Date().toLocaleString(),
     };
-    return await AddNote(noteObject).then((response) => {
-      console.log(response);
-    });
+    return await AddNote(noteObject);
   };
 
-  const handleUpdate = async (id) => {
+  const handleUpdate = async () => {
     const noteObject = {
       name: note,
-      image: image,
+      image: null,
       priority: priority,
+      date: null,
+      id: id
     };
-    return await getAll().then((response) => {
-     setNoteList(response);
-     noteList.forEach(note => {
-      if(not.id===id) 
-        return note;
-     })
-     console.log(noteList);
-    });
-  };
+
+    return await Update(noteObject);
+  }
 
   const handleChange = (e) => {
     const regex = /^[0-5]$/;
@@ -85,8 +89,8 @@ const NoteForm = ({ typeForm, not }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
+     e.preventDefault();
+     e.target.reset();
     setImage({
       selectedImage: null,
       imagePreviewUrl: null,
@@ -96,8 +100,7 @@ const NoteForm = ({ typeForm, not }) => {
       handleService().then(() => {
         successMessage();
       });
-    }
-    if (typeForm === "update") {
+    } else if (typeForm === "update") {
       handleUpdate().then(() => {
         successMessage();
       });
@@ -128,6 +131,7 @@ const NoteForm = ({ typeForm, not }) => {
             id="my-input"
             aria-describedby="my-helper-text"
             onChange={(e) => setNote(e.target.value)}
+            value={note}
           />
           <Button
             sx={{ gridArea: "button" }}
@@ -148,6 +152,7 @@ const NoteForm = ({ typeForm, not }) => {
                   multiple
                   type="file"
                   onChange={fileChangedHandler}
+                  value={image.imagePreviewUrl}
                 />
                 <label htmlFor="raised-button-file">
                   <Button variant="raised" component="span">

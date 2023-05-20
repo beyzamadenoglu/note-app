@@ -1,10 +1,10 @@
 import React from "react";
 import NoteForm from "../components/NoteForm";
 
-const UpdatePage = () => {
+const UpdatePage = (id) => {
   return (
     <>
-        <NoteForm typeForm={"update"}/>
+        <NoteForm typeForm={"update"} noteId={id} />
     </>
   )
 }

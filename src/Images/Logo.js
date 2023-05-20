@@ -20,8 +20,8 @@ const NotFound = () => {
           y2="53"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#1A6DFF" />
-          <stop offset="1" stop-color="#C822FF" />
+          <stop stopColor="#1A6DFF" />
+          <stop offset="1" stopColor="#C822FF" />
         </linearGradient>
       </defs>
     </svg>

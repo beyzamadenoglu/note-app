@@ -13,7 +13,7 @@ function Router() {
         <Route path="/" element={<Login />} />
         <Route path="/listNotes" element={<Notes />} />
         <Route path="/addNote" element={<AddNote />} />
-        <Route path="/updateNote" element={<Update />} />
+        <Route path="/updateNote/:id" element={<Update />}/>
       </Routes>
     </>
   );

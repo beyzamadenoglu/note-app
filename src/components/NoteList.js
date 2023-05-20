@@ -3,7 +3,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Note from "./Note";
-import getAll from "../services/GetAll";
+import GetAll from "../services/GetAll";
 import Search from "./Search";
 
 const NoteList = () => {
@@ -21,7 +21,7 @@ const NoteList = () => {
   const dataFiltered = filterData(searchQuery, Object.values(noteList));
 
   useEffect(() => {
-    getAll().then((data) => {
+    GetAll().then((data) => {
       setNoteList(data);
     });
   }, []);

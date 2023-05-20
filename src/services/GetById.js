@@ -1,11 +1,10 @@
 import axios, { URL } from "../axios/axios";
 
-const GetAllNotes = async () => {
+const GetById = async (id) => {
     try {
         return await axios
-            .get(URL.getAll).then((res)=> {
+            .get(`${URL.getAll}/${id}`).then((res)=> {
                return res.data;
-               
             });
     }
     catch (error) {
@@ -15,4 +14,4 @@ const GetAllNotes = async () => {
 }
 
 
-export default GetAllNotes;
+export default GetById;

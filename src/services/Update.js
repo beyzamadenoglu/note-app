@@ -1,8 +1,8 @@
 import axios, { URL } from '../axios/axios';
 
- const UpdateNote = async (id, updated)  => {
+ const UpdateNote = async (note)  => {
     return await axios
-     .put(`${URL.update}/${id}`, updated)
+     .put(`${URL.update}/${note.id}`, note)
         .then((response) => {
             return response;
         })    

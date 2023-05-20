@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import { toast } from "react-toastify";
 import ReactImageFallback from "react-image-fallback";
@@ -30,6 +31,7 @@ const Note = ({ note }) => {
       }
     });
   };
+
   return (
     <div className="note">
      <ReactImageFallback
@@ -44,7 +46,7 @@ const Note = ({ note }) => {
       <IconButton className="button hovered" onClick={deleteItem}>
         <DeleteOutlinedIcon />
       </IconButton>
-      <IconButton className="button hovered" onClick={deleteItem}>
+      <IconButton component={Link} to={`/updateNote/${note.id}`} className="button hovered">
         <ModeEditOutlineOutlinedIcon />
       </IconButton>
     </div>

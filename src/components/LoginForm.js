@@ -31,7 +31,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     localStorage.setItem("auth", auth);
-    console.log(auth)
+
     if(auth) {
         navigate("/listNotes");
     }else{
@@ -44,7 +44,6 @@ const LoginForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, formikHelpers) => {
-          console.log(values);
           handleLogin(values);
           formikHelpers.resetForm();
         }}
