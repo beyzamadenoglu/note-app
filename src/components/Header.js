@@ -1,60 +1,42 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import Button from "@mui/material/Button";
 import Logo from "../Images/Logo";
 import NoteAdd from "../Images/NoteAdd";
-import { Link } from 'react-router-dom';
-import Note from "./Note";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const [auth, setAuth] = useState(false);
+  const isAuth = JSON.parse(localStorage.getItem("auth"));
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+   setAuth(isAuth);
+  }, [isAuth]);
+
+  const handleLogout = () => {
+    localStorage.setItem("auth", false);
+    navigate("/");
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar style={{background: "#000000"}}>
-          {auth && (
-            <div>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )}
+        <Toolbar style={{ background: "#000000" }}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            component={Link}to="/listNotes"
+            component={Link}
+            to="/listNotes"
           >
             <Logo />
           </IconButton>
@@ -65,10 +47,12 @@ const Header = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            component={Link}to="/addNote"
+            component={Link}
+            to="/addNote"
           >
             <NoteAdd />
           </IconButton>
+          {auth && <Button onClick={handleLogout} color="secondary">ÇIKIŞ YAP</Button>}
         </Toolbar>
       </AppBar>
     </Box>
