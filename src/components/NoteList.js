@@ -15,11 +15,10 @@ const NoteList = () => {
     if (!query) {
       return data;
     } else {
-     return data.filter((d) => d.name.toLowerCase().includes(query));
+      return data.filter((d) => d.name.toLowerCase().includes(query));
     }
   };
   const dataFiltered = filterData(searchQuery, Object.values(noteList));
-
 
   useEffect(() => {
     getAll().then((data) => {
@@ -49,25 +48,30 @@ const NoteList = () => {
     setSorted(e.target.value);
   };
 
-  
   return (
     <div className="notes">
-      <Search searchQuery={searchQuery} searchText={setSearchQuery} />
-      <div style={{ padding: 3 }}>
+      <div className="note-utils">
+        <Search searchQuery={searchQuery} searchText={setSearchQuery} />
+        <div>
+          <InputLabel id="demo-simple-select-label">
+            Öncelik sıralaması
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={sorted}
+            label="Priority"
+            onChange={handleChange}
+            onClick={handleOrder}
+          >
+            <MenuItem value={"ASC"}>High to low</MenuItem>
+            <MenuItem value={"DESC"}>Low to high</MenuItem>
+          </Select>
+        </div>
       </div>
-      <InputLabel id="demo-simple-select-label">Öncelik sıralaması</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={sorted}
-          label="Priority"
-          onChange={handleChange}
-          onClick={handleOrder}
-        >
-          <MenuItem value={"ASC"}>High to low</MenuItem>
-          <MenuItem value={"DESC"}>Low to high</MenuItem>
-        </Select>
-        <div id="list-container">
+
+      <div id="list-container">
+        <h1>Your notes</h1>
         {dataFiltered && dataFiltered.length > 0 ? (
           dataFiltered.map((note, index) => <Note key={index} note={note} />)
         ) : (
@@ -75,8 +79,7 @@ const NoteList = () => {
             <h3>Henüz içerik girilmedi. </h3>
           </>
         )}
-        </div>
-        
+      </div>
     </div>
   );
 };

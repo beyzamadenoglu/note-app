@@ -5,7 +5,7 @@
 	border-radius: 6px;
 	padding: 20px;
     .note {
-		background-color: rgba(148, 141, 141, 0.353);
+		background-color: rgb(255 224 224 / 35%);
         margin: 8px;
 		padding: 10px;
 		border-radius: 6px;
@@ -31,12 +31,20 @@
 	}
 }
 
+.note-utils {
+	display: flex;
+	justify-content: space-between;
+}
 
 #list-container {
 	background: rgba(102, 97, 97, 0.17);
 	padding: 13px;
 	backdrop-filter: blur(4px);
 	border-radius: 20px;
+
+		h1{
+			text-align: center;
+		}
 }
 
 .form {
