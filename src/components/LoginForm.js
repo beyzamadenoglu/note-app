@@ -74,9 +74,9 @@ const LoginForm = () => {
               type="submit"
               variant="contained"
               size="large"
+              color="secondary"
               style={{
                 borderRadius: "8px",
-                backgroundColor: "rgb(248 211 149 / 48%)",
                 padding: "2px 20px",
                 fontSize: "18px",
                 color: "#FFFFFF",

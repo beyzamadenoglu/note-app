@@ -136,7 +136,7 @@ const NoteForm = ({ typeForm, not }) => {
             className="button"
             type="submit"
           >
-            Add
+            Ekle
           </Button>
           <Card>
             {selectedImage === null ? (
