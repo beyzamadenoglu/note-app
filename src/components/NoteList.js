@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Note from "./Note";
 import Pagination from "./Pagination";
@@ -41,6 +40,9 @@ const NoteList = () => {
 
   const refreshContent = () => {
     GetAll().then((data) => {
+      data = data.sort(function(a,b) {
+        return new Date(b.date)- new Date(a.date);
+      })
       setNoteList(data);
       setFilteredNoteList(data);
     });
@@ -63,6 +65,7 @@ const NoteList = () => {
     setNoteList(sortedArr);
     setCurrentPage(1);
   };
+
 
   const handleChange = (e) => {
     e.preventDefault();

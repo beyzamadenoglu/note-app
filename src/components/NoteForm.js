@@ -24,7 +24,6 @@ const NoteForm = ({ typeForm, typeText }) => {
   useEffect(() => {
     const setNoteState = async () => {
       const updateObject = await GetById(id);
-      console.log(updateObject);
       setNote(updateObject.name);
       setPriority(updateObject.priority);
       setImage( {
@@ -46,9 +45,6 @@ const NoteForm = ({ typeForm, typeText }) => {
       selectedImage: event.target.files[0],
       imagePreviewUrl: event.target.files[0],
     });
-
-    console.log(event.target.files)
-
     let reader = new FileReader();
 
     reader.onloadend = () => {
