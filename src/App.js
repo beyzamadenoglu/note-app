@@ -4,14 +4,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from "./components/Layout";
 import "./styles/notes.scss";
+import { AuthProvider } from "./context/useAuth";
 
 function App() {
   return (
     <>
-      <Layout>
+    <AuthProvider>
+    <Layout>
         <Router />
         <ToastContainer />
       </Layout>
+    </AuthProvider>
+     
 
 
     </>

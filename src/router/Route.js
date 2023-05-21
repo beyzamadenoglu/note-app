@@ -1,17 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "../pages/LoginPage";
 import Notes from "../pages/NotesPage";
 import AddNote from "../pages/AddPage";
 import Update from "../pages/UpdatePage";
+import { ProtectedRoute } from "../utils/ProtectedRoute";
+
 
 function Router() {
   return (
     <>
       <Routes>
-        <Route path="/listNotes" element={<Notes />} />
-        <Route path="/addNote" element={<AddNote />} />
-        <Route path="/updateNote/:id" element={<Update />} />
+      <Route
+        path="/listNotes"
+        element={
+          <ProtectedRoute>
+            <Notes />
+          </ProtectedRoute>
+        }
+      />
+       <Route
+        path="/addNote"
+        element={
+          <ProtectedRoute>
+            <AddNote />
+          </ProtectedRoute>
+        }
+      />
+       <Route
+        path="/updateNote/:id"
+        element={
+          <ProtectedRoute>
+            <Update />
+          </ProtectedRoute>
+        }
+      />
         <Route path="/" element={<Login />} />
       </Routes>
     </>

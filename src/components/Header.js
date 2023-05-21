@@ -8,20 +8,18 @@ import Button from "@mui/material/Button";
 import Logo from "../Images/Logo";
 import NoteAdd from "../Images/NoteAdd";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 const Header = () => {
 
-  const [auth, setAuth] = useState(false);
-  const isAuth = JSON.parse(localStorage.getItem("auth"));
+  const auth = useAuth();
+
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-   setAuth(isAuth);
-  }, [isAuth]);
 
   const handleLogout = () => {
-    localStorage.setItem("auth", false);
+  auth.logout();
     navigate("/");
   }
 

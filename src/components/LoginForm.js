@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Box, InputBase } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/useAuth";
 
 import "../styles/login.scss";
 
@@ -12,16 +12,15 @@ const initialValues = {
 };
 
 const LoginForm = () => {
-  const [auth, setAuth] = useState(false);
 
-  const navigate = useNavigate();
+  const auth = useAuth();
 
   const handleLogin = async (credentials) => {
     if (
       credentials.username === "admin" &&
       credentials.password === "12345"
     ) {
-      setAuth((prev) => !prev);
+      auth.login();
     } else {
       toast.error("Kullanıcı adınız veya Şifreniz Hatalı.", {
         position: toast.POSITION.TOP_RIGHT,
@@ -29,15 +28,6 @@ const LoginForm = () => {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("auth", auth);
-
-    if(auth) {
-        navigate("/listNotes");
-    }else{
-        navigate("/");
-    }
-  }, [auth]);
 
   return (
     <div className="login-form">
