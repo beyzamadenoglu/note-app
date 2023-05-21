@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,9 +14,7 @@ const Header = () => {
 
   const auth = useAuth();
 
-
   const navigate = useNavigate();
-
 
   const handleLogout = () => {
   auth.logout();
@@ -50,7 +48,7 @@ const Header = () => {
           >
             <NoteAdd />
           </IconButton>
-          {auth && <Button onClick={handleLogout} style={{color:"white"}}>ÇIKIŞ YAP</Button>}
+          {auth.user && <Button onClick={handleLogout} style={{color:"white", float:"right", marginLeft:"auto"}}>ÇIKIŞ YAP</Button>}
         </Toolbar>
       </AppBar>
     </Box>

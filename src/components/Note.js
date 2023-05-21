@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import { toast } from "react-toastify";
@@ -6,23 +6,30 @@ import ReactImageFallback from "react-image-fallback";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import NotFoundImage from "../Images/NotFound";
+import DeleteModal from "./DeleteModal";
 
 import DeleteNote from "../services/Delete";
 
-const Note = ({ note, onNoteDelete, id }) => {
+const Note = ({ note, onNoteDelete }) => {
+  const [modalState, setModalState] = useState(false);
+
   const successMessage = () => {
-    toast.success("Succesfully Deleted!", {
+    toast.success("Not silindi!", {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
 
   const errorMessage = () => {
-    toast.error("Note did not deleted!", {
+    toast.error("Not silinemedi!", {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
 
-  const deleteItem = () => {
+  const deleteItem = (userApproval) => {
+    setModalState(false);
+
+    if (!userApproval) { return false };
+
     DeleteNote(note.id).then((data) => {
       if (data.status === 200) {
         onNoteDelete();
@@ -31,10 +38,13 @@ const Note = ({ note, onNoteDelete, id }) => {
         errorMessage();
       }
     });
+
   };
 
   return (
+    <>
     <div className="note">
+      <DeleteModal open={modalState} handleClose={deleteItem} />
      <ReactImageFallback
         src={note.image.imagePreviewUrl}
         fallbackImage={<NotFoundImage />}
@@ -43,14 +53,16 @@ const Note = ({ note, onNoteDelete, id }) => {
       />
       <p>{note.name}</p>
       <p>{note.information}</p>
-      <p>{note.priority}</p>
-      <IconButton className="button hovered" onClick={deleteItem}>
+      <p>{note.priority || "-"}</p>
+      <IconButton className="button hovered" onClick={() => {setModalState(true)}}>
         <DeleteOutlinedIcon />
       </IconButton>
       <IconButton component={Link} to={`/updateNote/${note.id}`} className="button hovered">
         <ModeEditOutlineOutlinedIcon />
       </IconButton>
     </div>
+    </>
+
   );
 };
 

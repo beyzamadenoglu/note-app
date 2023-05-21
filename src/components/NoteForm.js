@@ -10,7 +10,7 @@ import Update from "../services/Update";
 import GetById from "../services/GetById";
 import { useParams } from "react-router-dom"
 
-const NoteForm = ({ typeForm }) => {
+const NoteForm = ({ typeForm, typeText }) => {
   const [note, setNote] = useState("");
   const [priority, setPriority] = useState("");
 
@@ -21,14 +21,16 @@ const NoteForm = ({ typeForm }) => {
 
   const { id } = useParams();
 
-  const { selectedImage, imagePreviewUrl } = image;
-
   useEffect(() => {
     const setNoteState = async () => {
       const updateObject = await GetById(id);
+      console.log(updateObject);
       setNote(updateObject.name);
       setPriority(updateObject.priority);
-      setImage(updateObject.image);
+      setImage( {
+        selectedImage:  updateObject.image.selectedImage,
+        imagePreviewUrl:  updateObject.image.imagePreviewUrl,
+      });
     }
 
     if (typeForm === "update" && id) {
@@ -40,13 +42,19 @@ const NoteForm = ({ typeForm }) => {
 
 
   const fileChangedHandler = (event) => {
-    setImage({ ...image, selectedImage: event.target.files[0] });
+    setImage( {
+      selectedImage: event.target.files[0],
+      imagePreviewUrl: event.target.files[0],
+    });
+
+    console.log(event.target.files)
 
     let reader = new FileReader();
 
     reader.onloadend = () => {
       setImage({
-        imagePreviewUrl: reader.result,
+        selectedImage: reader.result,
+        imagePreviewUrl: reader.result
       });
     };
 
@@ -66,7 +74,7 @@ const NoteForm = ({ typeForm }) => {
   const handleUpdate = async () => {
     const noteObject = {
       name: note,
-      image: null,
+      image: image,
       priority: priority,
       date: null,
       id: id
@@ -83,7 +91,7 @@ const NoteForm = ({ typeForm }) => {
   };
 
   const successMessage = () => {
-    toast.success("Succesfully added!", {
+    toast.success(`Başarıyla ${typeText}!`, {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
@@ -97,10 +105,12 @@ const NoteForm = ({ typeForm }) => {
     });
     setPriority("");
     if (typeForm === "add") {
+      typeText = "Kaydedildi"
       handleService().then(() => {
         successMessage();
       });
     } else if (typeForm === "update") {
+      typeText = "Güncellendi."
       handleUpdate().then(() => {
         successMessage();
       });
@@ -110,40 +120,18 @@ const NoteForm = ({ typeForm }) => {
   return (
     <div className="form">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <FormGroup
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 1,
-            gridTemplateRows: "auto",
-            gridTemplateAreas: `"label . ."
-        "input input button"`,
-          }}
-          className="add-form"
-        >
-          <InputLabel sx={{ gridArea: "label" }} htmlFor="my-input">
-            Add Your Note
+        <FormGroup className="add-form" sx={{ gap: 2 }}>
+          <InputLabel htmlFor="my-input" style={{fontSize:'25px'}}>
+            Not girin
           </InputLabel>
-          <Input
+          <TextField
             required
             placeholder={"Not Bilgisi"}
-            sx={{ gridArea: "input" }}
-            id="my-input"
-            aria-describedby="my-helper-text"
+            id="my-inbput"
             onChange={(e) => setNote(e.target.value)}
             value={note}
           />
-          <Button
-            sx={{ gridArea: "button" }}
-            variant="contained"
-            color="secondary"
-            className="button"
-            type="submit"
-          >
-           {typeForm === "update" ? "Güncelle" : "Ekle" }
-          </Button>
           <Card>
-            {selectedImage === null ? (
               <CardContent>
                 <input
                   accept="image/*"
@@ -152,20 +140,18 @@ const NoteForm = ({ typeForm }) => {
                   multiple
                   type="file"
                   onChange={fileChangedHandler}
-                  value={image.imagePreviewUrl}
                 />
                 <label htmlFor="raised-button-file">
                   <Button variant="raised" component="span">
-                    Resim Yükle
+                    {typeForm === "update" ? "Güncelle" : "Resim Yükle"}
                   </Button>
                 </label>
-              </CardContent>
-            ) : (
-              <CardContent>
-                <img src={imagePreviewUrl} alt="icon" width="100" />{" "}
-                <CardActions />
-              </CardContent>
-            )}
+                { image.imagePreviewUrl != null &&
+                  <>
+                    <p> Yüklenen resim; </p>
+                    <img src={image.imagePreviewUrl} alt="icon" width="100" />  
+                  </> }
+            </CardContent>
           </Card>
           <TextField
             id="filled-number"
@@ -175,6 +161,14 @@ const NoteForm = ({ typeForm }) => {
             value={priority}
             onChange={handleChange}
           />
+          <Button
+            variant="contained"
+            color="secondary"
+            className="button"
+            type="submit"
+          >
+           {typeForm === "update" ? "Güncelle" : "Ekle" }
+          </Button>
         </FormGroup>
       </form>
     </div>
