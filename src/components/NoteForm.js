@@ -10,7 +10,7 @@ import Update from "../services/Update";
 import GetById from "../services/GetById";
 import { useParams } from "react-router-dom"
 
-const NoteForm = ({ typeForm, not, noteId }) => {
+const NoteForm = ({ typeForm }) => {
   const [note, setNote] = useState("");
   const [priority, setPriority] = useState("");
 
@@ -140,7 +140,7 @@ const NoteForm = ({ typeForm, not, noteId }) => {
             className="button"
             type="submit"
           >
-            Ekle
+           {typeForm === "update" ? "Güncelle" : "Ekle" }
           </Button>
           <Card>
             {selectedImage === null ? (

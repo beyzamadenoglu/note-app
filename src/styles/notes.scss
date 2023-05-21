@@ -20,11 +20,11 @@
 		}
 
         .hovered {
-            display: none;
+            visibility: hidden;
         }
         &:hover {
             .hovered {
-                display: inline;
+                visibility: visible;
             }
         }
 
@@ -53,6 +53,31 @@
 	margin-top: 10%;
 	border-radius: 6px;
 	padding: 20px;
+}
+
+.pagination {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 1rem;
+	button {
+		width: 40px;
+		height: 40px;
+		font-family: inherit;
+		font-weight: 600;
+		font-size: 16px;
+		margin: 0 10px;
+		border-radius: 6px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		background: transparent;
+		border-color: #eee;
+		&.active {
+			font-weight: 900;
+			border-color: #cc37e6;
+			color: #101010;
+		}
+	}
 }
 
 

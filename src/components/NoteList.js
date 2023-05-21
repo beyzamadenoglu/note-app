@@ -3,28 +3,48 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Note from "./Note";
+import Pagination from "./Pagination";
 import GetAll from "../services/GetAll";
 import Search from "./Search";
 
 const NoteList = () => {
   const [noteList, setNoteList] = useState([]);
-  const [sorted, setSorted] = useState("ASC");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageContent, setPageContent] = useState([]);
+  const [contentLength, setContentLength] = useState(0);
+  const [filteredNoteList, setFilteredNoteList] = useState([]);
+  const [sorted, setSorted] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const notesPerPage = 10;
 
   const filterData = (query, data) => {
-    if (!query) {
-      return data;
-    } else {
-      return data.filter((d) => d.name.toLowerCase().includes(query));
-    }
+    setCurrentPage(1)
+    return data.filter((d) => d.name.toLowerCase().includes(query));
   };
-  const dataFiltered = filterData(searchQuery, Object.values(noteList));
 
   useEffect(() => {
+    setFilteredNoteList(filterData(searchQuery, Object.values(noteList)));
+  },[searchQuery]);
+
+  useEffect(() => {refreshContent(); }, [noteList.length]);
+
+  useEffect(() => {
+    let tempPage = currentPage * notesPerPage
+    if (searchQuery === null || searchQuery === "") {
+      setContentLength(noteList.length);
+      setPageContent(noteList.slice(tempPage - notesPerPage, tempPage ));
+    } else {
+      setContentLength(filteredNoteList.length);
+      setPageContent(filteredNoteList.slice(tempPage - notesPerPage, tempPage ));
+    }
+  }, [currentPage, noteList, sorted, filteredNoteList]);
+
+  const refreshContent = () => {
     GetAll().then((data) => {
       setNoteList(data);
+      setFilteredNoteList(data);
     });
-  }, []);
+  }
 
   const handleOrder = () => {
     let sortedArr = noteList;
@@ -41,6 +61,7 @@ const NoteList = () => {
     }
 
     setNoteList(sortedArr);
+    setCurrentPage(1);
   };
 
   const handleChange = (e) => {
@@ -64,22 +85,23 @@ const NoteList = () => {
             onChange={handleChange}
             onClick={handleOrder}
           >
-            <MenuItem value={"ASC"}>High to low</MenuItem>
-            <MenuItem value={"DESC"}>Low to high</MenuItem>
+            <MenuItem value={"ASC"}>Artan Öncelik</MenuItem>
+            <MenuItem value={"DESC"}>Azalan Öncelik</MenuItem>
           </Select>
         </div>
       </div>
 
       <div id="list-container">
         <h1>Your notes</h1>
-        {dataFiltered && dataFiltered.length > 0 ? (
-          dataFiltered.map((note, index) => <Note key={index} note={note} />)
+        {pageContent && pageContent.length > 0 ? (
+          pageContent.map((note, index) => <Note key={index} note={note} onNoteDelete={refreshContent} />)
         ) : (
           <>
             <h3>Henüz içerik girilmedi. </h3>
           </>
         )}
       </div>
+      <Pagination totalNotes={contentLength} notesPerPage={notesPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
     </div>
   );
 };

@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar style={{ background: "#000000" }}>
+        <Toolbar style={{ background: "rgb(64 64 64)" }}>
           <IconButton
             size="large"
             edge="start"
@@ -52,7 +52,7 @@ const Header = () => {
           >
             <NoteAdd />
           </IconButton>
-          {auth && <Button onClick={handleLogout} color="secondary">ÇIKIŞ YAP</Button>}
+          {auth && <Button onClick={handleLogout} style={{color:"white"}}>ÇIKIŞ YAP</Button>}
         </Toolbar>
       </AppBar>
     </Box>

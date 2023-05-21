@@ -9,7 +9,7 @@ import NotFoundImage from "../Images/NotFound";
 
 import DeleteNote from "../services/Delete";
 
-const Note = ({ note }) => {
+const Note = ({ note, onNoteDelete, id }) => {
   const successMessage = () => {
     toast.success("Succesfully Deleted!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -25,6 +25,7 @@ const Note = ({ note }) => {
   const deleteItem = () => {
     DeleteNote(note.id).then((data) => {
       if (data.status === 200) {
+        onNoteDelete();
         successMessage();
       } else {
         errorMessage();
