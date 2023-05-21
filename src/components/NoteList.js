@@ -18,7 +18,7 @@ const NoteList = () => {
 
   const filterData = (query, data) => {
     setCurrentPage(1)
-    return data.filter((d) => d.name.toLowerCase().includes(query));
+    return data.filter((d) => d.name.includes(query));
   };
 
   useEffect(() => {

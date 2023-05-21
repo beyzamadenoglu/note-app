@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { FormGroup, InputLabel, Input, Button } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+import { FormGroup, InputLabel, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 import AddNote from "../services/Add";
@@ -13,6 +12,7 @@ import { useParams } from "react-router-dom"
 const NoteForm = ({ typeForm, typeText }) => {
   const [note, setNote] = useState("");
   const [priority, setPriority] = useState("");
+  const [date, setDate] = useState(new Date());
 
   const [image, setImage] = useState({
     selectedImage: null,
@@ -21,11 +21,14 @@ const NoteForm = ({ typeForm, typeText }) => {
 
   const { id } = useParams();
 
+  const inputRef = useRef(null);
+
   useEffect(() => {
     const setNoteState = async () => {
       const updateObject = await GetById(id);
       setNote(updateObject.name);
       setPriority(updateObject.priority);
+      setDate(updateObject.date);
       setImage( {
         selectedImage:  updateObject.image.selectedImage,
         imagePreviewUrl:  updateObject.image.imagePreviewUrl,
@@ -72,8 +75,9 @@ const NoteForm = ({ typeForm, typeText }) => {
       name: note,
       image: image,
       priority: priority,
-      date: null,
-      id: id
+      id: id,
+      date: date,
+
     };
 
     return await Update(noteObject);
@@ -94,7 +98,10 @@ const NoteForm = ({ typeForm, typeText }) => {
 
   const handleSubmit = (e) => {
      e.preventDefault();
+     inputRef.current.value = "";
+     inputRef.current.value = null;
      e.target.reset();
+
     setImage({
       selectedImage: null,
       imagePreviewUrl: null,
@@ -126,6 +133,7 @@ const NoteForm = ({ typeForm, typeText }) => {
             id="my-inbput"
             onChange={(e) => setNote(e.target.value)}
             value={note}
+            inputRef={inputRef}
           />
           <Card>
               <CardContent>
