@@ -1,21 +1,26 @@
-# Getting Started with Create React App
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Clone
-İlk olarak bu Github projesini clonelamalı `git clone https://github.com/beyzamadenoglu/note-app.git; , daha sonra favori terminalinizi açmalısınız.
+### Code Splitting
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-# Run Mock Server
-Öncelikle, Fake REST API servisini çalıştırmak için öncelikle `npm i json-server` ile paketi indirmeli, indirme tamamlandıktan sonra terminalde `json-server --watch src/db/db.json` komutunu çalıştırmalıyız.
 
-# Install Dependencies
-Daha sonra `npm install` ile gerekli packageları npm ile yüklemeliyiz.
+### Analyzing the Bundle Size
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-# Start Project
-Daha sonra projemizi 3000 harici farklı bir portta ayağa kaldırmalıyız, `npm start`.
 
-# Usage
-Daha sonra ygulama üzerinden Login olup `username: admin password: 12345` not(not ismi, resim, öncelik) ekleyebilir, güncelleyebilir 
-ve silebilirsiniz. Ayriyeten Notlarınızı listeyebilirsiniz.
+### Making a Progressive Web App
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Advanced Configuration
 
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Deployment
+
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+
+### `npm run build` fails to minify
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
